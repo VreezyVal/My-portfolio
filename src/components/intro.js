@@ -16,11 +16,11 @@ const words = [
     useEffect(()=>{
         const interval = setInterval(() => {
             setCurrentWord((prev) => (prev + 1) % words.length);
-        }, 200); //Change de mot toutes les 0.2s
+        }, 250); //Change de mot toutes les 0.2s
 
         const timer = setTimeout(() =>{
             onFinish(); // Appelle la fonction pour terminer l'intro après l'affichage de tous les mots
-        }, words.length * 200); //Dure 7 secondes (0.2 seconde  par mot)
+        }, words.length * 250); //Dure 7 secondes (0.2 seconde  par mot)
 
         return () => {
             clearInterval(interval);
