@@ -1,37 +1,163 @@
 /* Déclaration des variables CSS pour le light mode*/
 :root {
-    --background-color: white;
-    --text-color: black;
+  --background-color: rgb(245, 244, 244);
+  --text-color: black;
 }
 
 /* variables pour le dark mode*/
 .dark-mode {
-    --background-color: black;
-    --text-color: white;
+  --background-color: black;
+  --text-color: white;
 }
 
 /* Styles globaux */
 body {
-    background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Assure que le body prend 100% de la hauteur de la fenêtre */
+  background-color: var(--background-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .intro {
-    height: 100vh; /* 100% de la hauteur de l'écran */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: black;
+  height: 100vh; /* 100% de la hauteur de l'écran */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
 }
 .intro p {
-    color: white;
-    font-size: 3.5rem;
-    animation: fadeInOut 1s ease-in-out;
+  color: white;
+  font-size: 3rem;
+  animation: fadeInOut 0.5s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
   }
-  
-  @keyframes fadeInOut {
-    0% { opacity: 0; }
-    50% { opacity: 1; }
-    100% { opacity: 0; }
+  50% {
+    opacity: 1;
   }
+  100% {
+    opacity: 0;
+  }
+}
+
+.page-container {
+  display: flex; /* Définit cette div comme un conteneur Flex */
+  flex-direction: column; /* Empile les enfants verticalement (header, main, footer) */
+  min-height: 100vh; /* S'assure que la div prend toute la hauteur de la fenêtre */
+}
+
+header {
+  /*flex-shrink: 0;  /* Le header prend seulement la place de son contenu */
+  position: relative; /* Positionne le header fixe en haut de la page */
+  /*top: 0; /* Aligne le header en haut */
+  left: 0; /* Assure qu'il commence à gauche */
+  right: 0; /* Étend le header jusqu'à la droite */
+  width: 100%; /* Assure que le header prend toute la largeur */
+  z-index: 1000; /* Assure que le header reste au-dessus des autres éléments */
+  background-color: transparent; /* Rends le header transparent */
+  padding: var(--space-4); /* Utilise l'espace de 24px pour le padding */
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+/* Sticky menu uniquement quand on scroll */
+header.scrolled {
+  /* position: sticky; */
+  /* top: 0; */
+  padding: var(--space-4);
+  z-index: 1000;
+}
+
+
+.header.scrolled.logo {
+  position: relative;
+  left: 0;
+}
+.header-link {
+  font-size: var(--font-sm); /* Taille de texte 14px définie dans layout.css */
+  text-decoration: none;
+  color: var(--text-color); /* Tu peux personnaliser cette couleur */
+}
+.logo {
+  display:  flex;
+  align-items: center;
+}
+
+nav {
+  display: flex;
+}
+
+/* Le menu de navigation */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: var(--space-4);  /* Espace entre les liens */
+  margin: 0;
+}
+.nav-links.hidden {
+  display: none;  /* Cache la barre de navigation après le scroll */
+}
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: var(--space-4);
+  margin: 0;
+}
+.hamburger {
+  display: flex; /*caché par défaut*/
+  flex-direction: column;
+  justify-content: center;
+  background-color: black;
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+  align-items: center;
+  cursor: pointer;
+  transform: translateY(0%) scale(0) rotate(0.001deg);
+  transition: transform 0.3s ease;    /* Transition pour l'effet smooth */
+}
+/* Sticky uniquement pour le hamburger menu après le scroll */
+.header.scrolled .hamburger {
+  position: fixed;
+  top: var(--space-5);
+  right: var(--space-5);
+  z-index: 1000;
+}
+
+.hamburger.visible {
+  transform: translateY(0%) scale(1) rotate(0.001deg); /* Applique l'effet de grossissement jusqu'a la taille normale */
+  transition: transform 0.3s ease;
+}
+.hamburger span {
+  height: 1px;
+  width: 30%;
+  background: var(--background-color);
+  margin: 4px 0;  /* Espacement entre les barres */
+  border-radius: 2px;  /* Coins arrondis pour un style plus doux */
+  transition: all 0.3s ease;
+  padding: 0px;
+  z-index: 100;
+}
+main {
+  flex-grow: 1; /* Le main prend tout l'espace restant disponible */
+  display: flex;
+  padding: var(--space-4);
+  width: 100%;
+}
+footer {
+  flex-shrink: 0; /* Le footer prend aussi juste la place de son contenu */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%; /* Assure que le header prend toute la largeur */
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  padding: var(--space-4); /* Utilise l'espace de 24px pour le padding */
+}
