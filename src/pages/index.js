@@ -1,27 +1,50 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react";
 import { Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 
-import Layout from "../components/layout"
-import Seo from "../components/seo"
-import Intro from "../components/intro"
-import "../styles/index.css"
-import Header from "../components/header"
-import Footer from "../components/footer"
+import Layout from "../components/layout";
+import Seo from "../components/seo";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+import Intro from "../components/intro";
+import "../styles/index.css";
+import MagnetEffect from "../components/magnetEffect";
+
 
 const HomePage = () => {
-  const [showHome, setShowHome] = useState(false)
+  const [showHome, setShowHome, isScrolled] = useState(false)
 
   // Fonction appelée à la fin de l'intro pour montrer la page d'accueil
   const handleIntroFinish = () => {
     setShowHome(true) //Change l'état pour afficher la page d'accueil après l'intro
   }
+
+  useEffect(() => {
+    if (showHome) {
+      gsap.fromTo(
+        '.page-container',
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 1, ease: 'power4.out' }
+      );
+
+      // ScrollTrigger for animating elements on scroll
+      ScrollTrigger.batch(".animate-on-scroll", {
+        start: "top 80%", // L'animation démarre quand 80% de l'élément est visible
+        onEnter: (batch) => gsap.to(batch, { opacity: 1, y: 0, stagger: 0.15, duration: 1.5, ease: "power4.out" }),
+        onLeave: (batch) => gsap.to(batch, { opacity: 0, y: 100, duration: 1.5, ease: "power4.out" })
+      });
+    }
+  }, [showHome]);
   return (
-    <div>
+      <>
       {showHome ? (
+        <Layout showHome={showHome} isScrolled={isScrolled}>
         <div className="page-container">
-          <Header />
+          <MagnetEffect showHome={showHome} />
+
           <main>
+            <section className="animate-on-scroll">
+
           <p>Je suis Valmy DITULUAKIDI développeur web. 
 
 Quare talis improborum consensio non modo excusatione amicitiae tegenda non est sed potius supplicio omni vindicanda est, ut ne quis concessum putet amicum vel bellum patriae inferentem sequi; quod quidem, ut res ire coepit, haud scio an aliquando futurum sit. Mihi autem non minori curae est, qualis res publica post mortem meam futura, quam qualis hodie sit.
@@ -52,19 +75,19 @@ Alii nullo quaerente vultus severitate adsimulata patrimonia sua in inmensum ext
 
 Itaque verae amicitiae difficillime reperiuntur in iis qui in honoribus reque publica versantur; ubi enim istum invenias qui honorem amici anteponat suo? Quid? Haec ut omittam, quam graves, quam difficiles plerisque videntur calamitatum societates! Ad quas non est facile inventu qui descendant. Quamquam Ennius recte.
 </p>
+            </section>
           </main>
-          <Footer />
         </div>
+        </Layout>
       ) : (
         // Affiche l'intro si showHome est false
-        <div>
+        <div  className="intro-container">
           <Intro onFinish={handleIntroFinish} />
         </div>
       )}
-    </div>
-  )
+      </>
+  );
 }
-
 /**
  * Head export to define metadata for the page
  *

@@ -26,11 +26,11 @@ body {
   justify-content: center;
   align-items: center;
   background-color: black;
+  z-index: 9999;
 }
 .intro p {
   color: white;
   font-size: 3rem;
-  animation: fadeInOut 0.5s ease-in-out;
 }
 
 @keyframes fadeInOut {
@@ -49,6 +49,8 @@ body {
   display: flex; /* Définit cette div comme un conteneur Flex */
   flex-direction: column; /* Empile les enfants verticalement (header, main, footer) */
   min-height: 100vh; /* S'assure que la div prend toute la hauteur de la fenêtre */
+  justify-content: center;
+  align-items: center;
 }
 
 header {
@@ -66,6 +68,10 @@ header {
   align-items: center;
   justify-content: space-between;
 }
+/* Appliquer un overflow hidden pour éviter les débordements */
+.header {
+  overflow: hidden; /* Empêche l'élément de sortir de la zone du header */
+}
 /* Sticky menu uniquement quand on scroll */
 header.scrolled {
   /* position: sticky; */
@@ -73,6 +79,7 @@ header.scrolled {
   padding: var(--space-4);
   z-index: 1000;
 }
+
 
 
 .header.scrolled.logo {
@@ -83,6 +90,7 @@ header.scrolled {
   font-size: var(--font-sm); /* Taille de texte 14px définie dans layout.css */
   text-decoration: none;
   color: var(--text-color); /* Tu peux personnaliser cette couleur */
+  cursor: pointer;
 }
 .logo {
   display:  flex;
@@ -91,6 +99,7 @@ header.scrolled {
 
 nav {
   display: flex;
+
 }
 
 /* Le menu de navigation */
@@ -102,6 +111,12 @@ nav {
 }
 .nav-links.hidden {
   display: none;  /* Cache la barre de navigation après le scroll */
+}
+/* Limiter la zone de chaque élément avec .magnetic */
+.header-link.magnetic {
+  display: inline-block; /* Limiter l'effet à chaque lien individuel */
+  position: relative;
+  z-index: 100;
 }
 .nav ul {
   list-style: none;
@@ -121,18 +136,27 @@ nav {
   cursor: pointer;
   transform: translateY(0%) scale(0) rotate(0.001deg);
   transition: transform 0.3s ease;    /* Transition pour l'effet smooth */
+  z-index: 1000;
 }
 /* Sticky uniquement pour le hamburger menu après le scroll */
 .header.scrolled .hamburger {
   position: fixed;
   top: var(--space-5);
   right: var(--space-5);
-  z-index: 1000;
 }
 
 .hamburger.visible {
-  transform: translateY(0%) scale(1) rotate(0.001deg); /* Applique l'effet de grossissement jusqu'a la taille normale */
+  transform: scale(1); /* Applique l'effet de grossissement */
   transition: transform 0.3s ease;
+}
+
+.hamburger.hidden {
+  transform: scale(0); /* Rétrécit l'élément */
+  opacity: 0; 
+}
+
+.hamburger.hidden.done {
+  display: none; /* Le retire complètement du flux après animation */
 }
 .hamburger span {
   height: 1px;
@@ -144,6 +168,18 @@ nav {
   padding: 0px;
   z-index: 100;
 }
+/* Styles pour les boutons et liens avec l'effet magnet */
+.magnetic {
+  cursor: pointer;  /* Affiche la main */
+  transform: translate(0, 0) scale(1);  /* État initial */
+  transition: transform 0.3s ease;  /* Transition douce */
+}
+
+/* Applique un style supplémentaire lors de l'effet */
+.magnetic:hover {
+  /*box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);  /* Ajoute une ombre pour l'effet de focus */
+}
+
 main {
   flex-grow: 1; /* Le main prend tout l'espace restant disponible */
   display: flex;
