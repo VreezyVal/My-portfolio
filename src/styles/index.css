@@ -53,6 +53,29 @@ body {
   align-items: center;
 }
 
+/* Pour le fond noir de la page de transition */ 
+.loading-screen {
+  position: fixed;
+  top: 100%;
+  left : 0;
+  width: 100%;
+  height: 100%;
+  background-color: black; /* Assureque la page de transition soit bien noire */
+  z-index: 9999; /* Au-dessus de tout le contenu */
+  overflow: hidden; /* Empêche le contenu de déborder */
+}
+/* Texte central pour le nom de la page */
+.loading-words {
+  text-align: center;
+  color: white; /* Assure-toi que le texte est visible sur le fond noir */
+  font-size: 3rem;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0; /* Commence invisible, sera animé par GSAP */
+  z-index: 10001;
+}
 header {
   /*flex-shrink: 0;  /* Le header prend seulement la place de son contenu */
   position: relative; /* Positionne le header fixe en haut de la page */
@@ -180,6 +203,15 @@ nav {
   /*box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);  /* Ajoute une ombre pour l'effet de focus */
 }
 
+.page-name {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%; 
+  height: 100%; 
+  transform: translateY(100%); 
+  z-index: 1000;
+}
 main {
   flex-grow: 1; /* Le main prend tout l'espace restant disponible */
   display: flex;

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Layout from '../components/layout';
 import Seo from '../components/seo'
+import { useStat, useEffect } from 'react';
 
 const AboutPage = () => {
     return (
