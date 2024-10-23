@@ -12,8 +12,13 @@ const capitalizeFirstLetter = (string) => {
 const PageTransition = ({ nextPageName, onComplete }) => {
     const loadingScreenRef = useRef(null);
     const loadingWordsRef = useRef(null);
+    const [isTransitioning, setIsTransitioning] = useState(false); // État pour bloquer les clics multiples
 
     useEffect(() => {
+
+      if (isTransitioning) return; // Ne rien faire si une transition est déjà en cours
+    setIsTransitioning(true); // Marquer l'état de transition comme actif
+
       const tl = gsap.timeline({
         onComplete: () => {       
           onComplete(); // Remet la transition à l'état initial
@@ -21,7 +26,7 @@ const PageTransition = ({ nextPageName, onComplete }) => {
         },
       });
 
-      // Initialisation de l'écran et des divs arrondies
+      // Initialisation de l'écran
       tl.set(loadingScreenRef.current, {
         top: "100%",
       });
@@ -66,6 +71,9 @@ const PageTransition = ({ nextPageName, onComplete }) => {
         duration: 0.7,
         top: "-100%",
         ease: "Power3.easeInOut",
+        onComplete: () => {
+          setIsTransitioning(false); // Marquer la transition comme terminée
+        },
       }, "-=0.2");
 
     }, [nextPageName, onComplete]);
