@@ -12,7 +12,7 @@ import Header from "./header"
 import Footer from "./footer"
 import MagnetEffect from "./magnetEffect"
 import PageTransition from "./transition"
-import { navigate } from "gatsby"
+import { prefetchPathname, navigate } from "gatsby"
 import "./layout.css"
 import "../styles/index.css"
 
@@ -32,10 +32,18 @@ const Layout = ({ children, showHome, isScrolled }) => {
    const [nextPage, setNextPage] = React.useState('');
  
    // Fonction pour gérer le changement de page avec la transition
-   const handlePageTransition = (pageName) => {
-     setNextPage(pageName);
-     setTransitioning(true);
-   };
+   const handlePageTransition = async (pageName) => {
+     setNextPage(pageName);  
+     setTransitioning(true);    // Active la transition
+     
+     // Précharge la prochaine page
+     await prefetchPathname(pageName);
+
+     // Démarre l'animation une fois la page préchargée
+     setTimeout(() => {
+      navigate(pageName);
+     }, 2000); // La durée doit correspondre à celle de l'animation
+    };
 
   return (
     <>

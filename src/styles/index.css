@@ -20,6 +20,36 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.btn {
+  position: relative;
+  z-index: 5;
+  border: 0;
+  outline: 0;
+}
+
+.btn-text {
+  position: relative;
+  z-index: 1; /* Texte au-dessus de tout */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-fill {
+    position: absolute;
+    background: #4a6cf7;
+    width: 150%;
+    height: 200%;
+    border-radius: 50%;
+    top: 100%;
+    left: -25%;
+    transform: translate3d(0, 76%, 0);
+    will-change: transform;
+    transition: transform 0.5s ease-in-out, background-color 0.5s ease-in-out; /* Animation fluide */
+    z-index: 0;
+}
+
+
 .intro {
   height: 100vh; /* 100% de la hauteur de l'écran */
   display: flex;
@@ -53,7 +83,7 @@ body {
   align-items: center;
 }
 
-/* Pour le fond noir de la page de transition */ 
+/* Pour le fond noir de la page de transition */
 .loading-screen {
   position: fixed;
   top: 100%;
@@ -76,6 +106,60 @@ body {
   opacity: 0; /* Commence invisible, sera animé par GSAP */
   z-index: 10001;
 }
+
+.page-transition-rounded-div {
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  height: 0; /* Commence à 0 et grandit */
+}
+
+.rounded-div-wrap {
+  position: absolute;
+  width: 100%;
+  height: 0; /* Débute à 0 et grandit */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: height 0.6s ease-in-out; /* Animation de la hauteur */
+  z-index: 10001;
+}
+.rounded-div {
+  width: 775%;
+  height: 150%;
+  background-color: rgb(25, 25, 25); /* Ajuste la couleur */
+  position: absolute;
+  top: 50%;
+  transform: translate(-6.5%, -50%);
+  border-radius: 50%;
+  z-index: 10001;
+}
+
+.page-transition-rounded-div.top {
+  top: -50px; /* Caché en haut */
+  left: 50%;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  /* transform: translateX(-50%); */
+  transform: translate(-50%, -86.666%) rotate(180deg); /* Courbé vers le haut */
+}
+
+.page-transition-rounded-div.bottom {
+  bottom: -50px; /* Caché en bas */
+  left: 50%;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  /* transform: translateX(-50%); */
+  transform: translate(-50%, -86.666%); /* Courbé vers le bas */
+}
+
+.hidden-page {
+  visibility: hidden;  /* Masque le contenu visuellement */
+  opacity: 0;     /* Rend le contenu transparent*/
+  pointer-events: none;   /* Désactive l'intéraction*/
+}
+
 header {
   /*flex-shrink: 0;  /* Le header prend seulement la place de son contenu */
   position: relative; /* Positionne le header fixe en haut de la page */
@@ -103,17 +187,33 @@ header.scrolled {
   z-index: 1000;
 }
 
-
-
 .header.scrolled.logo {
   position: relative;
   left: 0;
 }
 .header-link {
-  font-size: var(--font-sm); /* Taille de texte 14px définie dans layout.css */
+  font-size: var(--font-md); /* Taille de texte 16px définie dans layout.css */
+  font-weight: 500;
   text-decoration: none;
-  color: var(--text-color); /* Tu peux personnaliser cette couleur */
+  color: var(--text-color); 
   cursor: pointer;
+  position: relative;
+}
+.header-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -4px;
+  width: 0%;
+  height: 3px;
+  background-color: rgb(41, 41, 41); 
+  border-radius: 2px;
+  opacity: 0.8;
+  transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.header-link:hover::after {
+  width: 100%;
 }
 .logo {
   display:  flex;
@@ -129,7 +229,7 @@ nav {
 .nav-links {
   list-style: none;
   display: flex;
-  gap: var(--space-4);  /* Espace entre les liens */
+  gap: var(--space-6);  /* Espace entre les liens */
   margin: 0;
 }
 .nav-links.hidden {
@@ -141,56 +241,281 @@ nav {
   position: relative;
   z-index: 100;
 }
+
+.header-link.active-link::after {
+  content: ""; /* Le point */
+  position: absolute;
+  left: 50%;
+  top: -4px;
+  width: 100%;
+  height: 3px;
+  background-color: rgb(79, 78, 78);
+  border-radius: 2px; /* Rond parfait */ 
+  transform: translateX(-50%) scaleX(0);   /* Initialement caché*/
+  opacity: 0;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+/* Animation de l'apparition */
+
+.header-link.active-link:hover::after,
+.header-link.active-link::after {
+  transform: translateX(-50%) scaleX(1); /* Apparait et s'agrandit */
+  opacity: 1; /*Devient visible */
+}
 .nav ul {
   list-style: none;
   display: flex;
-  gap: var(--space-4);
+  gap: 32px;
   margin: 0;
+  padding: var(--space-2) var(--space-5) 0 var(--space-5);
+  /* font-size: clamp(1rem, 1.5vw, 2rem); */
 }
 .hamburger {
   display: flex; /*caché par défaut*/
   flex-direction: column;
   justify-content: center;
   background-color: black;
-  width: 95px;
-  height: 95px;
+  width: clamp(4em, 5.5vw, 5em);
+  height: clamp(4em, 5.5vw, 5em);
   border-radius: 50%;
   align-items: center;
-  cursor: pointer;
-  transform: translateY(0%) scale(0) rotate(0.001deg);
-  transition: transform 0.3s ease;    /* Transition pour l'effet smooth */
+  cursor: pointer; 
+  transform: scale(0) rotate(0.001deg);
+  transform-origin: center center;
+  transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);    /* Transition pour l'effet smooth */
+  will-change: transform, opacity;
   z-index: 1000;
-}
-/* Sticky uniquement pour le hamburger menu après le scroll */
-.header.scrolled .hamburger {
   position: fixed;
+  overflow: hidden;
   top: var(--space-5);
   right: var(--space-5);
 }
+/* Sticky uniquement pour le hamburger menu après le scroll */
+.header.scrolled .hamburger {
+ 
+  overflow: hidden;
+}
+
+.header.scrolled .hamburger:hover .btn-fill{
+  transform: translate3d(0, -76%, 0); /* Le remplissage monte au survol */
+}
+
+.hamburger.open {
+  /* transform: scale(1); */
+  background-color: #4a6cf7;
+}
 
 .hamburger.visible {
-  transform: scale(1); /* Applique l'effet de grossissement */
-  transition: transform 0.3s ease;
+  transform: scale(1) rotate(0.001deg); /* Applique l'effet de grossissement */
+  transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* État initial */
+.hamburger:not(.visible) {
+  transform: scale(0) rotate(0.001deg);
+  transition: transform 0.8s
 }
 
 .hamburger.hidden {
   transform: scale(0); /* Rétrécit l'élément */
-  opacity: 0; 
+  transform-origin: center center;
+  transition:  transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease-in-out;
 }
 
 .hamburger.hidden.done {
   display: none; /* Le retire complètement du flux après animation */
 }
+
+
 .hamburger span {
-  height: 1px;
+  position: absolute;
+  height: 2px;
   width: 30%;
   background: var(--background-color);
-  margin: 4px 0;  /* Espacement entre les barres */
+  /*margin: 4px 0;  /* Espacement entre les barres */
   border-radius: 2px;  /* Coins arrondis pour un style plus doux */
   transition: all 0.3s ease;
   padding: 0px;
   z-index: 100;
 }
+.hamburger span:nth-child(2) {
+  transform: translateY(-4px);
+}
+
+.hamburger span:nth-child(3) {
+  transform: translateY(4px);
+}
+
+.hamburger.open span:nth-child(2) {
+  transform: rotate(45deg); /* Transforme en croix */
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg); /* Transforme en croix */
+}
+/* Hamburger Highlight in Footer */
+.hamburger.hightlight {
+  border: 2px solid whitesmoke;
+}
+
+.fixed-nav-rounded-div {
+  position: absolute;
+  left: 1px;
+  transform: translateX(-100%);
+  height: 100%;
+  top: 0;
+}
+
+.rounded-div-wrap {
+  width: 6vw;
+  height: 100%;
+  transition: all.9s cubic-bezier(.7, 0, .3, 1);
+  will-change: width;
+}
+.rounded-div {
+  width: 150%;
+  content: "";
+  display: block;
+  position: absolute;
+  background: white;
+  height: 750%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(50%, 86.666%);
+  z-index: 1;
+}
+.active .fixed-nav-rounded-div .rounded-div-wrap {
+  width: 0vw;
+}
+.fixed-nav-rounded-div .rounded-div-wrap .rounded-div {
+  width:775%;
+  content: "";
+  display: block;
+  position: absolute;
+  background: rgb(25, 25, 25);
+  height: 150%;
+  top: 50%;
+  border-radius: 50%;
+  transform: translate(-6.5%, -50%);
+}
+.offscreen-menu{
+  position: fixed;
+  visibility: hidden;
+  top: 0;
+  right: 0;
+  /* width: 100%; */
+  height: 100vh;
+  background: rgb(25, 25, 25) ;
+  z-index: 999;
+  transform: translate(calc(100% + 6vw), 0) rotate(0.001deg); 
+  transition: transform .8s cubic-bezier(.7, 0, .2, 1),
+              opacity 0.8s ease-in-out, visibility 0s 0.8s;
+  will-change: transform, opacity;
+}
+
+.offscreen-menu.active {
+  display: flex !important;
+  visibility: visible;
+  transform: translate(0, 0) rotate(00.001deg);
+  transition: transform 0.8s cubic-bezier(0.7, 0, 0.2, 1), 
+  opacity 0.8s ease-in-out; /* Supprime le délai sur visibility */
+}
+
+.offscreen-overlay {
+  position : fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  visibility: hidden;
+  transition: background 0.5 ease, visibility 0.5s ease;
+  z-index: 998;
+}
+
+.offscreen-overlay.active {
+  background: rgba(0, 0, 0, 0.1);
+  visibility: visible;
+}
+
+
+.fixed-nav-inner{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 15vh 7.5vw 10vh 7.5vw;
+  transform: translate(0, 0) rotate(0.001deg);
+  transition: all .6s cubic-bezier(.7, 0, .2, 1);
+  will-change: transform;
+}
+.fixed-nav-inner .nav-row ul {
+  gap: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 5vh;
+}
+.fixed-nav-links li {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+.offscreen-link {
+  position: relative;
+  font-size: clamp(1.5rem, 5vw, 2.75rem); /*Texte grand */
+  text-decoration: none;
+  color: white;
+  display: flex;
+  transition: color 0.3s ease;
+  line-height: 1.3;
+}
+
+/* Cercle à gauche du lien actif */
+.offscreen-link::before {
+  content: "";
+  position: absolute;
+  left: -30px;
+  top: 55%;
+  width: 9px;
+  height: 9px;
+  background-color: whitesmoke; 
+  border-radius: 50%;
+  transform: translateX(-50%) scale(0); /* Caché au départ */
+  opacity: 0;
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+
+/* Apparition progressive du cercle */
+
+.offscreen-link:hover::before,
+.offscreen-link.active-link::before {
+  transform: translateX(-50%) scale(1); /* Le cercle apparaît */
+  opacity: 1;
+}
+
+.fixed-nav-inner .socials {
+ width: 300px;
+ display: flex;
+ flex-direction: column;
+}
+.fixed-nav-inner p {
+  font-size: clamp(0.6rem, 1vw, 0.75rem);
+  font-weight: 650;
+  color: #aaa;
+  margin : 0;
+  padding-bottom: var(--space-3);
+  text-transform: uppercase;
+}
+.social-row-icons  {
+  display: flex;
+  justify-content: space-between;
+  /* social-row-iconsborder: solid violet; */
+}
+
 /* Styles pour les boutons et liens avec l'effet magnet */
 .magnetic {
   cursor: pointer;  /* Affiche la main */
@@ -199,17 +524,17 @@ nav {
 }
 
 /* Applique un style supplémentaire lors de l'effet */
-.magnetic:hover {
-  /*box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);  /* Ajoute une ombre pour l'effet de focus */
-}
+/*.magnetic:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);  /* Ajoute une ombre pour l'effet de focus
+}*/
 
 .page-name {
-  position: fixed; 
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%; 
-  height: 100%; 
-  transform: translateY(100%); 
+  width: 100%;
+  height: 100%;
+  transform: translateY(100%);
   z-index: 1000;
 }
 main {
@@ -218,14 +543,265 @@ main {
   padding: var(--space-4);
   width: 100%;
 }
-footer {
-  flex-shrink: 0; /* Le footer prend aussi juste la place de son contenu */
-  bottom: 0;
-  left: 0;
+
+.stripe {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-border-light);
+}
+.footer {
+  /* flex-shrink: 0; Le footer prend aussi juste la place de son contenu */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: #121212;
+  color: white;
+}
+
+.footer-top {
+  flex: 7;
+  /* border: solid salmon; */
+}
+.medium {
+  padding-left: calc(var(--container-padding)*2);
+  padding-right: calc(var(--container-padding)*2);
+}
+/* .container {
+ max-width: none;
+ width: 100%;
+ margin: 0 auto;
+ padding-left: var(--container-padding);
+ padding-right: var(--container-padding);
+ box-sizing: border-box; Inclut padding dans la largeur totale 
+  border : solid red;
+} */
+/* Style pour la première partie du footer */
+
+/* * {
+  border: 1px solid red;
+} */
+
+.profile-picture {
+  display: block;
+  width: clamp(0.80em, 8vw, 0.85em);
+  height: clamp(0.80em, 8vw, 0.85em);
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-picture img {
+  width: auto;
+  height: 100%;
+  object-fit: cover;
+  margin: 0;
+}
+
+footer h2 {
+  font-size: calc(clamp(3.25em, 7vw, 8em)* .875);
+  padding: 0;
+  margin-top: 0;
+  line-height: 1;
+}
+
+footer h2 span {
+  /* display: inline-block; */
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.image-and-text {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: end; /* Aligne verticalement le texte par rapport à l'image */
+  gap: var(--space-5); /* Espace entre l'image et le texte */
+  /* border: solid blue; */
+}
+.footer .medium .row:nth-child(1) {
+  padding-bottom: calc(var(--section-padding)* .375);
+}
+.footer .medium .row:nth-child(2) {
+  padding-bottom: calc(var(--section-padding)* .475);
+}
+/* .footer-contacts {
+  display: flex;
+  gap: 16px;
+}*/
+
+.get-in-touch-container {
+  position: absolute;
   right: 0;
-  width: 100%; /* Assure que le header prend toute la largeur */
+  top: 0;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+}
+.footer-circle-button {
+  background-color: #4a6cf7;
+  width: clamp(9em, 12vw, 11em);
+  height: clamp(9em, 12vw, 11em);
+  font-size: clamp(0.9rem, 1.75vw, 1.2rem); /* Taille du texte responsive */
+  font-weight: 550;
+  letter-spacing: clamp(-0.1em, 0.02vw, -0.05em) ;
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  margin: 0 auto;
-  padding: var(--space-4); /* Utilise l'espace de 24px pour le padding */
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  }
+
+  footer .medium .row:nth-child(3) .flex-col {
+    display: flex;
+    flex-direction: row;
+    gap: clamp(0.5rem, 1vw, 1rem); /* Espace entre les boutons */
+}
+
+.btn-contact {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: clamp(0.75rem, 2vw, 1.05rem); /* Taille du texte responsive */
+  font-weight: 600;
+  letter-spacing: clamp(-0.1em, 0.02vw, -0.05em) ;
+  padding: clamp(0.5rem, 1vw, 0.75rem) clamp(1.5rem, 2vw, 2rem); /* Padding responsive */
+  min-width: clamp(8rem, 15vw, 12rem); /* Largeur minimale et maximale des boutons */
+  height: clamp(4rem, 5vw, 4.5rem); /* Hauteur des boutons */
+  border: 1px solid var(--color-border-light); /* Bordure */
+  overflow: hidden;
+  outline: 0;
+  color: whitesmoke;
+  background-color: transparent;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+.btn-contact:hover .btn-fill{
+  transform: translate3d(0, -76%, 0); /* Le remplissage monte au survol */
+  
+}
+
+/* Style pour la deuxième partie du footer */
+.footer-bottom {
+  display: flex;
+  flex: 3;
+  bottom: 0;
+  left: 0;
+  padding: calc(var(--section-padding) / 1.3) calc(var(--gap-padding) / 1.33) calc(var(--gap-padding) / 1.75) calc(var(--gap-padding) / 1);
+}
+.footer-bottom .row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* border : solid salmon; */
+}
+
+.footer-bottom .row .flex-col {
+  /* border: solid rgb(81, 12, 105); */
+}
+.footer-bottom .footer-title {
+  font-size: clamp(0.6rem, 1vw, 0.75rem);
+  font-weight: 650;
+  color: #aaa;
+  margin : 0;
+  padding-bottom: var(--space-3);
+  text-transform: uppercase;
+}
+.footer-bottom p {
+  font-size: clamp(0.6rem, 1.3vw, 0.9rem); 
+  font-weight: 650;
+  margin : 0;
+}
+
+.footer-bottom-left {
+  display: flex;
+  justify-content: start;
+  gap: clamp(3rem, 1vw, 6rem);
+  padding-left: var(--space-6);
+}
+
+.footer-bottom-left p {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.socials {
+  display: flex;
+  flex-direction: column;
+}
+.socials ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 2.5rem);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.icon-globe {
+  color: white;
+  font-size: clamp(0.5rem, 3vw, 1rem); /* Taille responsive des icônes */
+  margin-right: 5px;
+  animation: rotateOnYAxis 5s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes rotateOnYAxis {
+  /* from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); } */
+}
+
+/* Animation pour les icônes de réseaux sociaux */
+
+.footer-social-icons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  /* justify-content: center; */
+  gap: clamp(1rem, 1vw, 2rem); /* Espace flexible entre les icônes */
+}
+#local-time {
+  font-size: clamp(0.6rem, 1vw, 0.9rem); 
+  font-weight: 650;
+}
+
+.icon-link {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden; /* Empêche le contenu de déborder */
+  color: white;
+  font-size: clamp(0.60rem, 2vw, 1.40rem); /* Taille responsive des icônes */
+  z-index: 1;
+}
+
+/* .icon-link:hover .btn-fill{
+  /*transform: translate3d(0, -66%, 0); /* Le remplissage monte au survol  
+} */
+
+/* Style des icônes */
+.icon {
+  position: relative; /* Pour rester au-dessus du remplissage */
+  z-index: 1; /* Priorité sur le remplissage */
+}
+
+.footer-bottom-right {
+  display: flex;
+  justify-content: flex-end;
+  gap: clamp(4em, 1vw, 6rem);
+  padding-right: var(--space-6);
 }

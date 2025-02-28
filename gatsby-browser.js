@@ -1,3 +1,5 @@
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css'
 /**
  * Implement Gatsby's Browser APIs in this file.
  *
@@ -5,6 +7,7 @@
  */
 
 // You can delete this file if you're not using it
+<<<<<<< HEAD
 // import barba from '@barba/core';
 // import gsap from 'gsap';
 
@@ -28,3 +31,6 @@
 //     }
 //   ]
 // });
+=======
+config.autoAddCss = false;
+>>>>>>> d8fa124 (Mise à jour : Ajout de nouvelles fonctionnalités et corrections)
