@@ -8,7 +8,7 @@ import {
   faLinkedin,
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons"
-import { faGlobe } from "@fortawesome/free-solid-svg-icons"
+// import { faGlobe } from "@fortawesome/free-solid-svg-icons"
 
 const Footer = () => {
   const footerRef = useRef(null)
@@ -69,7 +69,10 @@ const Footer = () => {
               <div className="stripe"></div>
               <div className="get-in-touch-container">
                 <Link to="/contact" className="footer-circle-button magnetic">
-                  Get in touch
+                  <div className="btn-fill"></div>
+                  <span className="btn-text">
+                    <span className="btn-text-inner change">Get in touch</span>
+                  </span>
                 </Link>
               </div>
             </div>
@@ -177,7 +180,7 @@ const Footer = () => {
                 <div className="local-time">
                   <p className="footer-title">local time</p>
                   <div className="localTime-icons">
-                    <FontAwesomeIcon icon={faGlobe} className="icon-globe" />
+                    {/* <FontAwesomeIcon icon={faGlobe} className="icon-globe" /> */}
                     <span id="local-time">{localTime}</span>
                   </div>
                 </div>

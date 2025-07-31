@@ -81,10 +81,13 @@ dfn {
   font-style: italic;
 }
 h1 {
-  margin: 0;
-  margin-bottom: 3rem;
+  /* margin-bottom: 3rem; */
   padding: 0;
-  line-height: var(--line-height-dense);
+  line-height: 1.065;
+  font-weight: 450;
+  font-size: calc(clamp(3.25em, 7vw, 8em) * .875);
+  margin-top: 0;
+  padding-top: 0;
   letter-spacing: normal;
 }
 h2 {

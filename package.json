@@ -5,16 +5,13 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-<<<<<<< HEAD
     "@barba/core": "^2.10.3",
-    "gatsby": "^5.12.12",
-=======
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "gatsby": "^5.13.7",
->>>>>>> d8fa124 (Mise à jour : Ajout de nouvelles fonctionnalités et corrections)
+    "gatsby-plugin-alias-imports": "^1.0.5",
     "gatsby-plugin-image": "^3.13.1",
     "gatsby-plugin-manifest": "^5.13.1",
     "gatsby-plugin-sharp": "^5.13.1",
@@ -22,7 +19,8 @@
     "gatsby-transformer-sharp": "^5.13.1",
     "gsap": "^3.12.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.54.2"
   },
   "devDependencies": {
     "@types/react": "^18.3.12",

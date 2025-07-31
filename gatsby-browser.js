@@ -7,7 +7,6 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
  */
 
 // You can delete this file if you're not using it
-<<<<<<< HEAD
 // import barba from '@barba/core';
 // import gsap from 'gsap';
 
@@ -31,6 +30,3 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 //     }
 //   ]
 // });
-=======
-config.autoAddCss = false;
->>>>>>> d8fa124 (Mise à jour : Ajout de nouvelles fonctionnalités et corrections)

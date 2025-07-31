@@ -49,7 +49,7 @@ const Header: React.FC<HeaderProps> = ({ handlePageTransition }) => {
         document.documentElement.style.overflow = 'hidden';
       } else {
         // Réactive le scroll et restaure la position
-        document.documentElement.style.overflow = '';
+        document.documentElement.style.overflow = 'auto';
         window.scrollTo(0, scrollPosition.current);
       }
       console.log("toggling offscreen menu. New state:", !prev); // Affiche le nouvel état

@@ -12,7 +12,8 @@ import Header from "./header"
 import Footer from "./footer"
 import MagnetEffect from "./magnetEffect"
 import PageTransition from "./transition"
-import { prefetchPathname, navigate } from "gatsby"
+import { prefetchPathname, navigate } from "gatsby";
+import { useLocation } from "@reach/router"
 import "./layout.css"
 import "../styles/index.css"
 
@@ -45,6 +46,10 @@ const Layout = ({ children, showHome, isScrolled }) => {
      }, 2000); // La durée doit correspondre à celle de l'animation
     };
 
+    const location = useLocation();
+    const normalizePath = (path) => path.replace(/\/+$/, "");
+    const isContactPage = normalizePath(location.pathname) === "/contact";
+
   return (
     <>
     {/* Si en train de faire une transition, affiche l'animation */}
@@ -57,7 +62,7 @@ const Layout = ({ children, showHome, isScrolled }) => {
         <div className="content-wrapper">
           <main>{children}</main>
         </div>
-        <Footer />  {/* Utilise ton propre footer */}
+        {!isContactPage && <Footer />}  {/* Utilise ton propre footer */}
       </div>
     )}
     </>

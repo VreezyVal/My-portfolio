@@ -60,7 +60,7 @@ body {
 }
 .intro p {
   color: white;
-  font-size: 3rem;
+  font-size: 4rem;
 }
 
 @keyframes fadeInOut {
@@ -98,7 +98,7 @@ body {
 .loading-words {
   text-align: center;
   color: white; /* Assure-toi que le texte est visible sur le fond noir */
-  font-size: 3rem;
+  font-size: 4rem;
   position: absolute;
   top: 60%;
   left: 50%;
@@ -160,6 +160,159 @@ body {
   pointer-events: none;   /* Désactive l'intéraction*/
 }
 
+/***************** Style page de maintenance *************************/
+.coming-soon-container {
+  display: flex;
+  flex-direction:column;
+  height: 100vh; /* Prend toute la hauteur de la fenêtre */
+  position: relative;
+}
+
+.overlay {
+  /*background: rgba(219, 218, 218, 0.1); /* Couleur de l'overlay */
+  height: 100%;
+}
+
+.coming-soon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Prend toute la hauteur de la fenêtre */
+  position: relative;
+  flex-wrap: wrap; /* Permet aux colonnes de se réorganiser sur plusieurs lignes si nécessaire */
+  padding: clamp(0.5rem, 4vw, 2rem); /* Padding responsive */
+}
+
+.coming-soon-left-column, .coming-soon-right-column {
+ flex: 1;
+ max-width: 45%;
+ /* border: solid 1px red; */
+}
+.coming-soon-left-column .row, .coming-soon-right-column .row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* Centre le texte */
+  /* border: solid 1px red; */
+  margin: 20px 0; /* Marge entre les lignes */
+  padding: 0 70px; 
+}
+
+.vertical-stripe {
+  width: 2px; /* Largeur de la ligne */
+  height: 60%; /* Prend 60 de la hauteur de l'écran */
+  background-color: var(--text-color); /* Couleur de la ligne */
+}
+.logo {
+  width: clamp(8rem, 8vw, 10rem);
+  margin: 0;
+}
+
+.coming-soon-left-column h1 {
+  font-size: clamp(1rem, 4vw, 3rem); /* Taille de texte responsive */
+  margin: 0; /* Enlève la marge par défaut */
+  padding: 0; /* Enlève le padding par défaut */
+}
+
+.coming-soon-left-column p {
+  font-size: clamp(0.5rem, 1.5vw, 1rem); /* Taille de texte responsive */
+  margin: 0; /* Enlève la marge par défaut */
+  /*max-width: 90%; /* Limite la largeur du texte */
+  line-height: 1.2; /* Espace entre les lignes */
+}
+.countdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: clamp(60px, 10vw, 150px); /* Largeur de l'image */
+  height: clamp(50px, 7vw, 100px);
+  gap: clamp(1rem, 2vw, 2rem); /* Espace entre les chiffres */
+}
+
+.countdown span {
+  font-size: 2rem; /* Taille de texte des countdown */
+  font-weight: 450;
+  position : relative;
+  display: inline-block; /* Permet d'utiliser margin et padding */
+  margin-top: 0.5rem;
+}
+
+.countdown span::after {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 2px;
+  background-color: var(--text-color); /* Couleur de la ligne */
+  margin: 1px auto; /* Espace entre le chiffre et la ligne */
+  z-index: -1; /* Derrière le contenu */
+}
+
+.countdown p {
+  font-size: 1rem;
+  position: relative;
+}
+
+.countdown div {
+  flex: 1; /* Chaque div prend une part égale de l'espace */
+  padding: 0 10px; /* Espace entre les chiffres */
+  border: 2px solid var(--text-color); /* Bordure autour de chaque chiffre */
+  border-radius: 50%; /* cercle */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90px;
+  height: 90px;
+  /* min-width:  ; */
+}
+
+.notify-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem; /* Espace au-dessus de la section */
+  position: relative;
+}
+
+.coming-soon-circle-btn {
+  background-color: var(--text-color) !important;  /* Couleur du bouton circle */
+}
+
+.coming-soon-circle-btn:hover .btn-fill {
+  background-color: white !important; /* Couleur de remplissage du bouton */
+}
+
+.coming-soon-circle-btn:hover .btn-text-inner {
+  color: var(--text-color); /* Couleur du texte au survol */
+}
+.coming-soon-social-icons {
+  font-size: clamp(0.5rem, 2vw, 1.5rem); /* Taille responsive des icônes */
+  color: var(--text-color); /* Couleur des icônes */
+  display: flex;
+  /* border: solid 1px red; */
+}
+
+.coming-soon-social-icons ul {
+  display: flex;
+  flex-direction: row;
+}
+@media (max-width: 768px) {
+  .coming-soon-wrapper {
+    flex-direction: column; /* Colonne sur mobile */
+    align-items: center; /* Centre le contenu */
+  }
+  .vertical-stripe {
+    display: none; /* Cache la ligne verticale sur mobile */
+  }
+  .coming-soon-left-column, .coming-soon-right-column {
+    max-width: 100%; /* Prend toute la largeur sur mobile */
+    flex: 1; /* Prend toute la largeur disponible */
+  }
+}
+/***************** Style *************************/
+
 header {
   /*flex-shrink: 0;  /* Le header prend seulement la place de son contenu */
   position: relative; /* Positionne le header fixe en haut de la page */
@@ -205,7 +358,7 @@ header.scrolled {
   left: 0;
   top: -4px;
   width: 0%;
-  height: 3px;
+  height: 2px;
   background-color: rgb(41, 41, 41); 
   border-radius: 2px;
   opacity: 0.8;
@@ -248,7 +401,7 @@ nav {
   left: 50%;
   top: -4px;
   width: 100%;
-  height: 3px;
+  height: 2px;
   background-color: rgb(79, 78, 78);
   border-radius: 2px; /* Rond parfait */ 
   transform: translateX(-50%) scaleX(0);   /* Initialement caché*/
@@ -276,8 +429,8 @@ nav {
   flex-direction: column;
   justify-content: center;
   background-color: black;
-  width: clamp(4em, 5.5vw, 5em);
-  height: clamp(4em, 5.5vw, 5em);
+  width: clamp(4em, 5.5vw, 6em);
+  height: clamp(4em, 5.5vw, 6em);
   border-radius: 50%;
   align-items: center;
   cursor: pointer; 
@@ -365,6 +518,7 @@ nav {
   transform: translateX(-100%);
   height: 100%;
   top: 0;
+  z-index: 1000;
 }
 
 .rounded-div-wrap {
@@ -372,6 +526,7 @@ nav {
   height: 100%;
   transition: all.9s cubic-bezier(.7, 0, .3, 1);
   will-change: width;
+  z-index: 1000;
 }
 .rounded-div {
   width: 150%;
@@ -383,10 +538,11 @@ nav {
   left: 50%;
   border-radius: 50%;
   transform: translate(50%, 86.666%);
-  z-index: 1;
+  z-index: 1000;
 }
 .active .fixed-nav-rounded-div .rounded-div-wrap {
   width: 0vw;
+  z-index: 1000;
 }
 .fixed-nav-rounded-div .rounded-div-wrap .rounded-div {
   width:775%;
@@ -398,6 +554,7 @@ nav {
   top: 50%;
   border-radius: 50%;
   transform: translate(-6.5%, -50%);
+  z-index: 1000;
 }
 .offscreen-menu{
   position: fixed;
@@ -406,7 +563,7 @@ nav {
   right: 0;
   /* width: 100%; */
   height: 100vh;
-  background: rgb(25, 25, 25) ;
+  background: rgba(25, 25, 25) ;
   z-index: 999;
   transform: translate(calc(100% + 6vw), 0) rotate(0.001deg); 
   transition: transform .8s cubic-bezier(.7, 0, .2, 1),
@@ -550,6 +707,91 @@ main {
   height: 1px;
   background-color: var(--color-border-light);
 }
+
+/*style pour le formulaire de contact */
+
+
+body.contact-page {
+  background-color: rgb(25, 25, 25);
+  color: white;
+}
+
+body.contact-page .header-link {
+  color: white;
+}
+body.contact-page .header-link:hover {
+  color: white;
+  text-decoration: none;
+}
+body.contact-page .header-link::after {
+  background-color: white;
+}
+body.contact-page main {
+  padding: 0 !important;
+}
+
+.contact-form {
+  /* position: relative; */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  box-sizing: border-box;
+  background-color: rgba(25, 25, 25) ;
+  color: white;
+  border: solid 1px greenyellow;
+}
+.contact-form-top {
+  border: solid 1px salmon;
+}
+
+.contact-form-top .row {
+  flex-wrap: nowrap;
+}
+.contact-form-top .row .flex-col:nth-child(1) {
+  flex: 73;
+  padding-right: calc(var(--container-padding) / 2);
+  box-sizing: border-box;
+}
+.contact-form-top .row .flex-col:nth-child(1) h1 span { 
+  display: block;
+}
+.contact-profile-picture {
+  position: relative;
+  display: inline-flex;
+  width: clamp(4.5em, 6.5vw, 8em);
+  height: clamp(4.5em, 6.5vw, 8em);
+  border-radius: 50%;
+  /* overflow: hidden; */
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+}
+.contact-form-top .row .flex-col:nth-child(2) {
+  flex: 27%;
+  padding-left: calc(var(--container-padding) / 2);
+}
+.contact-form-top .row:nth-child(1) .flex-col:nth-child(2) {
+  padding-top: calc(clamp(3.25em, 7vw, 8em) * .875 * 1.175);
+}
+.contact-form-top .row:nth-child(2) {
+  border: solid 1px blue;
+}
+.form-row {
+  position: relative;
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid var(--color-border-light);
+  padding: 0 2.75em;
+}
+/* * {
+  outline: 1px solid red;
+} */
+/************************************/
+
+
+/* Style pour le footer */
 .footer {
   /* flex-shrink: 0; Le footer prend aussi juste la place de son contenu */
   position: relative;
@@ -557,11 +799,12 @@ main {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  padding-bottom: 0;
+  padding: 70px 0 0 0;
   box-sizing: border-box;
   overflow: hidden;
-  background-color: #121212;
+  background-color: rgba(25, 25, 25) ;
   color: white;
+  /* border : solid 1px violet; */
 }
 
 .footer-top {
@@ -569,18 +812,19 @@ main {
   /* border: solid salmon; */
 }
 .medium {
+  /* border: solid 1px red; */
   padding-left: calc(var(--container-padding)*2);
   padding-right: calc(var(--container-padding)*2);
 }
-/* .container {
- max-width: none;
+ .container {
+   margin: 0 auto;
+ /*max-width: none;
  width: 100%;
- margin: 0 auto;
  padding-left: var(--container-padding);
  padding-right: var(--container-padding);
  box-sizing: border-box; Inclut padding dans la largeur totale 
-  border : solid red;
-} */
+  border : solid red;*/
+} 
 /* Style pour la première partie du footer */
 
 /* * {
@@ -628,11 +872,15 @@ footer h2 span {
   /* border: solid blue; */
 }
 .footer .medium .row:nth-child(1) {
-  padding-bottom: calc(var(--section-padding)* .375);
+  padding-bottom: calc(var(--section-padding)* .175);
+  
 }
 .footer .medium .row:nth-child(2) {
   padding-bottom: calc(var(--section-padding)* .475);
 }
+/* .footer .medium .row:nth-child(3) {
+  padding-bottom: calc(var(--section-padding)* .375);
+} */
 /* .footer-contacts {
   display: flex;
   gap: 16px;
@@ -647,10 +895,10 @@ footer h2 span {
 }
 .footer-circle-button {
   background-color: #4a6cf7;
-  width: clamp(9em, 12vw, 11em);
-  height: clamp(9em, 12vw, 11em);
-  font-size: clamp(0.9rem, 1.75vw, 1.2rem); /* Taille du texte responsive */
-  font-weight: 550;
+  width: clamp(8em, 12vw, 11em);
+  height: clamp(8em, 12vw, 11em);
+  font-size: clamp(0.6rem, 1.35vw, 1.2rem); /* Taille du texte responsive */
+  font-weight: 530;
   letter-spacing: clamp(-0.1em, 0.02vw, -0.05em) ;
   border-radius: 50%;
   display: flex;
@@ -707,14 +955,16 @@ footer h2 span {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: flex-end;
   /* border : solid salmon; */
 }
 
 .footer-bottom .row .flex-col {
   /* border: solid rgb(81, 12, 105); */
+  margin-bottom: 20px;
 }
 .footer-bottom .footer-title {
-  font-size: clamp(0.6rem, 1vw, 0.75rem);
+  font-size: clamp(0.5rem, 0.9vw, 0.75rem);
   font-weight: 650;
   color: #aaa;
   margin : 0;
@@ -722,8 +972,8 @@ footer h2 span {
   text-transform: uppercase;
 }
 .footer-bottom p {
-  font-size: clamp(0.6rem, 1.3vw, 0.9rem); 
-  font-weight: 650;
+  font-size: clamp(0.5rem, 1.125vw, 0.9rem); 
+  font-weight: 600;
   margin : 0;
 }
 
@@ -772,12 +1022,15 @@ footer h2 span {
   flex-direction: row;
   align-items: center;
   width: 100%;
-  /* justify-content: center; */
+  justify-content: flex-end;
   gap: clamp(1rem, 1vw, 2rem); /* Espace flexible entre les icônes */
+  padding: 0;
+  margin: 0;
+  /* border: solid salmon */
 }
 #local-time {
   font-size: clamp(0.6rem, 1vw, 0.9rem); 
-  font-weight: 650;
+  font-weight: 600;
 }
 
 .icon-link {
@@ -802,6 +1055,8 @@ footer h2 span {
 .footer-bottom-right {
   display: flex;
   justify-content: flex-end;
+  align-items: flex-end;
   gap: clamp(4em, 1vw, 6rem);
   padding-right: var(--space-6);
+  /* border: solid blue; */
 }

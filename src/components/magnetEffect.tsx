@@ -21,7 +21,7 @@ const MagnetEffect = ({ }) => {
             const bounding = magnetButton.getBoundingClientRect();
             // Récupère la force de l'effet depuis les attributs data-*
             const magnetsStrength = magnetButton.getAttribute('data-strength') || '150';
-            const magnetsStrengthText = magnetButton.getAttribute('data-strength-text') || '75';
+            const magnetsStrengthText = magnetButton.getAttribute('data-strength-text') || '30';
 
             //Animation de l'élément principal
             gsap.to(magnetButton, {
@@ -34,11 +34,11 @@ const MagnetEffect = ({ }) => {
             });
 
             // Animation du texte à l'intérieur (si présent)
-            const btnText = magnetButton.querySelector('btn-text');
+            const btnText = magnetButton.querySelector('.btn-text');
             if(btnText) {
               //Animation similaire pour le texte
               gsap.to(btnText, {
-                duration: 0.1,
+                duration: 0.3,
                 x: ((mouseEvent.clientX - bounding.left) / magnetButton.offsetWidth - 0.5) * parseInt(magnetsStrengthText),
                 y: ((mouseEvent.clientY - bounding.top) / magnetButton.offsetHeight - 0.5) * parseInt(magnetsStrengthText),
                 rotate: '0.001deg',
